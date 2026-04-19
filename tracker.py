@@ -56,7 +56,8 @@ class TypingTracker:
             count = self._interval_count
             self._interval_count = 0
 
-        timestamp = self._now_fn().replace(second=0, microsecond=0).strftime("%Y-%m-%d %H:%M")
+        current_time = self._now_fn()
+        timestamp = current_time.replace(second=0, microsecond=0).strftime("%Y-%m-%d %H:%M")
         self._append_row(timestamp, count)
         return count
 
@@ -68,7 +69,7 @@ class TypingTracker:
         if self._writer_thread and self._writer_thread.is_alive():
             return
         self._stop_event.clear()
-        self._writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
+        self._writer_thread = threading.Thread(target=self._writer_loop, daemon=False)
         self._writer_thread.start()
 
     def stop_writer(self, flush: bool = True) -> None:
