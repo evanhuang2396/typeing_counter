@@ -70,7 +70,7 @@ class TypingTracker:
         if self._writer_thread and self._writer_thread.is_alive():
             return
         self._stop_event.clear()
-        self._writer_thread = threading.Thread(target=self._writer_loop, daemon=False)
+        self._writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
         self._writer_thread.start()
 
     def stop_writer(self, flush: bool = True) -> None:
