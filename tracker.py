@@ -6,6 +6,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Callable
 
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
+
 
 class TypingTracker:
     def __init__(
@@ -30,9 +35,7 @@ class TypingTracker:
         row = {"timestamp": timestamp, "keystroke_count": count}
         self.output_file.parent.mkdir(parents=True, exist_ok=True)
 
-        try:
-            import pandas as pd
-
+        if pd is not None:
             frame = pd.DataFrame([row])
             frame.to_csv(
                 self.output_file,
@@ -41,8 +44,6 @@ class TypingTracker:
                 header=not self.output_file.exists(),
             )
             return
-        except ImportError:
-            pass
 
         file_exists = self.output_file.exists()
         with self.output_file.open("a", newline="", encoding="utf-8") as csv_file:
