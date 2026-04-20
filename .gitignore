@@ -191,6 +191,9 @@ cython_debug/
 # Ruff stuff:
 .ruff_cache/
 
+# Project data files
+daily_typing.csv
+
 # PyPI configuration file
 .pypirc
 
@@ -205,3 +208,4 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+*.csv
